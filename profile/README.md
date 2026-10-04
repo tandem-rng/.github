@@ -1,7 +1,7 @@
 <p align="center"><img src="assets/lockup-org-slate.png" width="560" alt="tandem rng"></p>
 
 Tandem8x32 is a noncryptographic pseudorandom number generator built to be fast on CPUs and GPUs alike.
-One [specification](https://github.com/tandem-rng/spec) defines one stream, and every port below writes it bit for bit, so a seed gives the same numbers in every language and on every device.
+The [specification](https://github.com/tandem-rng/spec) defines how the bitstream is produced, and every port below writes it bit for bit, so a seed gives the same bitstream in every language and on every device.
 
 | language | repository | status |
 |---|---|---|
