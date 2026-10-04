@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$pagetitle$</title>
+<meta name="theme-color" content="#fbf7f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#232a3a" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Sora:wght@400;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="bar">
+    <a class="org" href="https://tandem-rng.github.io/"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 12 H40 M24 12 V52" fill="none" stroke="#7fb3ee" stroke-width="8" stroke-linecap="square"/><path d="M24 52 H56 M40 52 V12" fill="none" stroke="#ee8db0" stroke-width="8" stroke-linecap="square"/></svg>tandem <span>rng</span></a>
+    <a class="port" href="index.html">$site-title$</a>
+$if(repo)$
+    <a class="src" href="https://github.com/$repo$">GitHub</a>
+$endif$
+  </div>
+  <nav class="pages" aria-label="Pages">
+$nav$
+  </nav>
+</header>
+<main>
+$body$
+</main>
+<footer>
+  <p>Plain markdown from <code>docs/</code>$if(repo)$ in <a href="https://github.com/$repo$">$repo$</a>$endif$. <a href="https://github.com/tandem-rng/spec/blob/main/SPEC.md">Specification</a> · <a href="https://tandem-rng.github.io/">All ports</a>$if(repo)$ · <a href="https://github.com/$repo$/blob/$ref$/LICENSE">License</a>$endif$</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,102 @@
+/* Tokens match https://tandem-rng.github.io (repo tandem-rng.github.io, index.html). */
+:root {
+  color-scheme: light dark;
+  --blue: #7fb3ee;
+  --pink: #ee8db0;
+  --cream: #fbf7f2;
+  --slate: #232a3a;
+  --ground: var(--cream);
+  --ink: #1b1f2a;
+  --muted: #5b6070;
+  --surface: #ffffff;
+  --line: #e6dfd5;
+  --code: #f4eee6;
+  /* Darker accents keep syntax colours readable on cream. */
+  --tok-key: #2b62a8;
+  --tok-lit: #a8366a;
+  --sans: Sora, "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: var(--slate);
+    --ink: #eef0ea;
+    --muted: #a9afbd;
+    --surface: #2b3346;
+    --line: #3a4358;
+    --code: #1c2230;
+    --tok-key: var(--blue);
+    --tok-lit: var(--pink);
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: 400 16px/1.65 var(--sans);
+}
+.top, main, footer { max-width: 54rem; margin: 0 auto; padding: 0 16px; }
+
+.top { padding-top: 1.25rem; }
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
+.bar a { text-decoration: none; }
+.org { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; letter-spacing: -0.02em; font-size: 1.1rem; }
+.org svg { width: 28px; height: 28px; flex: none; }
+.org span { color: var(--pink); }
+.port { font-family: var(--mono); font-weight: 500; color: var(--muted); }
+.port::before { content: "/"; margin-right: 14px; color: var(--line); }
+.src { margin-left: auto; font-size: 0.9rem; font-weight: 600; }
+.src:hover, .port:hover { color: var(--ink); }
+.pages { display: flex; flex-wrap: wrap; gap: 8px; padding: 1rem 0 1.25rem; border-bottom: 1px solid var(--line); }
+.pages a { text-decoration: none; font-size: 0.9rem; font-weight: 600; padding: 0.3rem 0.75rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
+.pages a:hover { border-color: var(--blue); }
+.pages a[aria-current="page"] { background: var(--blue); border-color: var(--blue); color: #1b1f2a; }
+
+main { padding-top: 0.5rem; padding-bottom: 3rem; }
+h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; scroll-margin-top: 1rem; }
+h1 { font-size: clamp(1.8rem, 6vw, 2.4rem); margin: 1.5rem 0 1rem; letter-spacing: -0.03em; }
+h2 { font-size: 1.4rem; margin: 2.75rem 0 0.75rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+h1 + h2 { margin-top: 1.5rem; padding-top: 0; border-top: 0; }
+h3 { font-size: 1.1rem; margin: 2rem 0 0.5rem; }
+h4 { font-size: 1rem; margin: 1.5rem 0 0.5rem; }
+p, ul, ol { margin: 0 0 1rem; }
+li { margin: 0.2rem 0; }
+li > p { margin: 0; }
+a { color: inherit; text-decoration: underline; text-decoration-color: var(--blue); text-decoration-thickness: 2px; text-underline-offset: 3px; overflow-wrap: anywhere; }
+a:hover { text-decoration-color: var(--pink); }
+img { max-width: 100%; height: auto; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+blockquote { margin: 0 0 1rem; padding: 0.1rem 0 0.1rem 1rem; border-left: 3px solid var(--pink); color: var(--muted); }
+
+code, pre { font-family: var(--mono); font-weight: 500; }
+code { font-size: 0.88em; overflow-wrap: anywhere; }
+:not(pre) > code { background: var(--code); padding: 0.08em 0.3em; border-radius: 4px; }
+pre { margin: 0 0 1.25rem; background: var(--code); border-radius: 6px; padding: 12px 14px; font-size: 13px; line-height: 1.55; overflow-x: auto; }
+pre code { font-size: inherit; overflow-wrap: normal; }
+div.sourceCode { margin: 0 0 1.25rem; }
+div.sourceCode pre { margin: 0; }
+pre > code.sourceCode > span { display: inline; }
+pre > code.sourceCode > span > a:first-child::before { content: none; }
+code span.co, code span.cv, code span.do, code span.an, code span.in { color: var(--muted); }
+code span.kw, code span.cf, code span.dt, code span.pp, code span.im, code span.bu { color: var(--tok-key); }
+code span.st, code span.ch, code span.ss, code span.sc, code span.vs, code span.dv, code span.bn, code span.fl, code span.cn { color: var(--tok-lit); }
+code span.al, code span.er { color: var(--tok-lit); font-weight: 600; }
+
+.table-wrap { overflow-x: auto; margin: 0 0 1.25rem; }
+table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+th, td { text-align: left; padding: 0.5rem 0.75rem 0.5rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; font-size: 0.85rem; color: var(--muted); }
+th:last-child, td:last-child { padding-right: 0; }
+td[style*="right"], th[style*="right"] { font-family: var(--mono); font-weight: 500; }
+
+footer { padding-bottom: 3rem; color: var(--muted); font-size: 0.85rem; }
+footer p { padding-top: 1.5rem; border-top: 1px solid var(--line); margin: 0; }
+
+@media (max-width: 640px) {
+  body { font-size: 15px; }
+  .src { margin-left: 0; }
+  pre { font-size: 12px; padding: 10px 12px; }
+  table { font-size: 0.85rem; }
+}

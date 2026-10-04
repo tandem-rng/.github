@@ -1,0 +1,66 @@
+# Renders a port's docs/ to GitHub Pages. Ports call it, see docs-template/HOWTO.md.
+name: Docs
+
+on:
+  workflow_call:
+    inputs:
+      title:
+        description: Site title, usually the repository name.
+        type: string
+        required: true
+      docs-dir:
+        description: Markdown source directory, relative to the repository root.
+        type: string
+        default: docs
+      template-ref:
+        description: Ref of tandem-rng/.github that holds docs-template/.
+        type: string
+        default: main
+
+env:
+  PANDOC_VERSION: "3.11"
+  PANDOC_SHA256: 89d4c9d97818c62a97157f0072844e4602c6cee795bf84abd1aee7273abcda99
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7
+        with:
+          repository: tandem-rng/.github
+          ref: ${{ inputs.template-ref }}
+          path: .docs-template
+          sparse-checkout: docs-template/site
+      - name: Install pandoc
+        run: |
+          deb=pandoc-$PANDOC_VERSION-1-amd64.deb
+          curl -fsSLO https://github.com/jgm/pandoc/releases/download/$PANDOC_VERSION/$deb
+          echo "$PANDOC_SHA256  $deb" | sha256sum -c -
+          sudo dpkg -i $deb
+      - name: Render
+        env:
+          DOCS_DIR: ${{ inputs.docs-dir }}
+          TITLE: ${{ inputs.title }}
+          REF: ${{ github.event.repository.default_branch }}
+        run: .docs-template/docs-template/site/build.sh "$DOCS_DIR" _site "$TITLE" "$GITHUB_REPOSITORY" "$REF"
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    # Pull requests only check that the docs render.
+    if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
