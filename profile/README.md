@@ -28,7 +28,7 @@ The [specification](https://github.com/tandem-rng/spec) defines how the bitstrea
 |---|---|---|---|---|
 | tandem-c | Apple M4 Pro, one thread | 16.1, Philox4x32-10 2.3 | 7.5 | [docs/speed.md at d9e1e54](https://github.com/tandem-rng/tandem-c/blob/d9e1e54/docs/speed.md) |
 | TandemRNG.jl | Apple M4 Pro, one task | 17.7, Random123 Philox4x32 1.83 | 6.34, Random123 Philox4x32 1.51 | [performance.md at d1e2abe](https://github.com/tandem-rng/TandemRNG.jl/blob/d1e2abe/docs/src/performance.md) |
-| tandem-cuda | NVIDIA A100 40 GB | 1392, cuRAND 795 | 1065 to 1096, cuRAND 597 | [docs/speed.md at ca76739](https://github.com/tandem-rng/tandem-cuda/blob/ca76739/docs/speed.md) |
+| tandem-cuda | NVIDIA A100 40 GB | 1387, cuRAND 780 | 1060, cuRAND 562 | [docs/speed.md at 7dad7dc](https://github.com/tandem-rng/tandem-cuda/blob/7dad7dc/docs/speed.md) |
 
 Every port's figures are on [tandem-rng.github.io](https://tandem-rng.github.io/#bench).
 
