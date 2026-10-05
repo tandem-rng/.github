@@ -24,11 +24,13 @@ The [specification](https://github.com/tandem-rng/spec) defines how the bitstrea
 | Haskell | [tandem-hs](https://github.com/tandem-rng/tandem-hs) | pure Haskell, `random` interface, under review |
 | OCaml | [tandem-ml](https://github.com/tandem-rng/tandem-ml) | fills over tandem-c, pure OCaml fallback, Float64 only |
 
-| | GiB/s | baseline | source |
-|---|---|---|---|
-| Float64 fill, NVIDIA A100 | 1392 | cuRAND Philox 795 | [tandem-cuda](https://github.com/tandem-rng/tandem-cuda/blob/main/docs/speed.md) |
-| `randn` float32, NVIDIA A100 | 1133 | `torch.randn` 774 | [tandem-torch](https://github.com/tandem-rng/tandem-torch/blob/main/docs/speed.md) |
-| `standard_normal` float64, Apple M4, one thread | 7.7 | NumPy `PCG64` 2.0 | [tandem-numpy](https://github.com/tandem-rng/tandem-numpy/blob/main/docs/speed.md) |
+| port | hardware | Float64 uniform fill, GiB/s | Float64 normal fill, GiB/s | source |
+|---|---|---|---|---|
+| tandem-c | Apple M4, one thread | 17.5, `std::mt19937_64` 3.1 | 7.7 | [docs/speed.md at 121db59](https://github.com/tandem-rng/tandem-c/blob/121db59/docs/speed.md) |
+| TandemRNG.jl | Apple M4, 14 tasks | 87.3 | 33.1, Box-Muller, ziggurat pending | [performance.md at 996f459](https://github.com/tandem-rng/TandemRNG.jl/blob/996f459/docs/src/performance.md) |
+| tandem-cuda | NVIDIA A100 40 GB | 1392, cuRAND 795 | 1065 to 1096, cuRAND 597 | [docs/speed.md at 4260acf](https://github.com/tandem-rng/tandem-cuda/blob/4260acf/docs/speed.md) |
+
+Every port's figures are on [tandem-rng.github.io](https://tandem-rng.github.io/#bench).
 
 Portions of the code were generated with the assistance of LLMs.
 
