@@ -21,7 +21,7 @@ The [specification](https://github.com/tandem-rng/spec) defines how the bitstrea
 | SYCL | [tandem-sycl](https://github.com/tandem-rng/tandem-sycl) | any SYCL device |
 | Metal | [tandem-metal](https://github.com/tandem-rng/tandem-metal) | Swift package, MSL shader, Swift CPU fills |
 | MLX | [tandem-mlx](https://github.com/tandem-rng/tandem-mlx) | `mx.fast.metal_kernel` over the tandem-metal shader |
-| Haskell | [tandem-hs](https://github.com/tandem-rng/tandem-hs) | pure Haskell, `random` interface, under review |
+| Haskell | [tandem-hs](https://github.com/tandem-rng/tandem-hs) | pure Haskell, `random` interface |
 | OCaml | [tandem-ml](https://github.com/tandem-rng/tandem-ml) | fills over tandem-c, pure OCaml fallback, Float64 only |
 
 | port | hardware | Float64 uniform fill, GiB/s | Float64 normal fill, GiB/s | source |
