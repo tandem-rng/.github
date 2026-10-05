@@ -27,7 +27,7 @@ The [specification](https://github.com/tandem-rng/spec) defines how the bitstrea
 | port | hardware | Float64 uniform fill, GiB/s | Float64 normal fill, GiB/s | source |
 |---|---|---|---|---|
 | tandem-c | Apple M4, one thread | 17.5, `std::mt19937_64` 3.1 | 7.7 | [docs/speed.md at 121db59](https://github.com/tandem-rng/tandem-c/blob/121db59/docs/speed.md) |
-| TandemRNG.jl | Apple M4, one task | 17.4, `Xoshiro` 20.2 | 4.81, `Xoshiro` 7.17, Box-Muller, ziggurat pending | [performance.md at 996f459](https://github.com/tandem-rng/TandemRNG.jl/blob/996f459/docs/src/performance.md) |
+| TandemRNG.jl | Apple M4, one task | 17.4, `Xoshiro` 20.2 | 6.24, `Xoshiro` 7.17 | [performance.md at 6f2988b](https://github.com/tandem-rng/TandemRNG.jl/blob/6f2988b/docs/src/performance.md) |
 | tandem-cuda | NVIDIA A100 40 GB | 1392, cuRAND 795 | 1065 to 1096, cuRAND 597 | [docs/speed.md at 4260acf](https://github.com/tandem-rng/tandem-cuda/blob/4260acf/docs/speed.md) |
 
 Every port's figures are on [tandem-rng.github.io](https://tandem-rng.github.io/#bench).
