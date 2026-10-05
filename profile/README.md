@@ -27,7 +27,7 @@ The [specification](https://github.com/tandem-rng/spec) defines how the bitstrea
 | | GiB/s | baseline | source |
 |---|---|---|---|
 | Float64 fill, NVIDIA A100 | 1392 | cuRAND Philox 795 | [tandem-cuda](https://github.com/tandem-rng/tandem-cuda/blob/main/docs/speed.md) |
-| `randn` float32, NVIDIA A100 | 1255 | `torch.randn` 913 | [tandem-torch](https://github.com/tandem-rng/tandem-torch) |
+| `randn` float32, NVIDIA A100 | 1133 | `torch.randn` 774 | [tandem-torch](https://github.com/tandem-rng/tandem-torch/blob/main/docs/speed.md) |
 | `standard_normal` float64, Apple M4, one thread | 7.7 | NumPy `PCG64` 2.0 | [tandem-numpy](https://github.com/tandem-rng/tandem-numpy/blob/main/docs/speed.md) |
 
 Portions of the code were generated with the assistance of LLMs.
