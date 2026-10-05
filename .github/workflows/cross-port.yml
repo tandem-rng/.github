@@ -1,0 +1,178 @@
+name: Cross-port streams
+
+# Nightly, every port's main dumps the same streams as tandem-c's main, and any SHA-256 that
+# differs fails that port's job. cross-port/README.md defines the streams and how to add a port.
+on:
+  schedule:
+    - cron: "23 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reference:
+    name: tandem-c (reference)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7
+        with:
+          repository: tandem-rng/tandem-c
+          path: port
+      - name: Install the latest clang
+        run: |
+          wget -qO /tmp/llvm.sh https://apt.llvm.org/llvm.sh
+          sudo bash /tmp/llvm.sh
+          v=$(ls /usr/bin/clang-[0-9]* | sed 's|.*/clang-||' | sort -n | tail -1)
+          echo "CC=clang-$v" >> "$GITHUB_ENV"
+      - run: bash cross-port/dump.sh tandem-c port out
+      - name: Hash the streams
+        run: |
+          (cd out && sha256sum *.bin) > reference.sha256
+          {
+            echo "### tandem-c $(git -C port rev-parse --short HEAD), $($CC --version | head -1)"
+            echo
+            echo '```'
+            cat reference.sha256
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: reference
+          path: reference.sha256
+
+  port:
+    name: ${{ matrix.name }}
+    needs: reference
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {name: TandemRNG.jl, repo: TandemRNG.jl, toolchain: julia, kinds: uniform bounded normal exponential}
+          - {name: tandem-rs, repo: tandem-rs, toolchain: rust, kinds: uniform bounded normal exponential}
+          - {name: tandem-numpy, repo: tandem-numpy, toolchain: python, clang: true, kinds: uniform bounded normal exponential}
+          - {name: tandem-jax (XLA), repo: tandem-jax, toolchain: python, kinds: uniform bounded normal}
+          - {name: tandem-torch (CPU), repo: tandem-torch, toolchain: python, clang: true, kinds: uniform bounded normal exponential}
+          - {name: tandem-r, repo: tandem-r, toolchain: r, kinds: uniform bounded normal exponential-f64}
+          - {name: tandem-webgpu (CPU), repo: tandem-webgpu, toolchain: node, kinds: uniform bounded normal exponential}
+          - {name: tandem-fortran, repo: tandem-fortran, toolchain: fortran, clang: true, kinds: uniform bounded normal exponential}
+          - {name: tandem-kokkos (OpenMP), repo: tandem-kokkos, toolchain: pixi, kinds: uniform bounded normal exponential}
+          - {name: tandem-sycl (AdaptiveCpp CPU), repo: tandem-sycl, toolchain: pixi, kinds: uniform bounded normal exponential}
+          - {name: tandem-java (Java fills), repo: tandem-java, toolchain: java, kinds: uniform bounded normal exponential}
+          - {name: tandem-mojo (CPU), repo: tandem-mojo, toolchain: pixi, kinds: uniform bounded normal exponential}
+          - {name: tandem-metal (CPU), repo: tandem-metal, toolchain: swift, kinds: uniform bounded normal exponential}
+          - {name: tandem-hs, repo: tandem-hs, toolchain: haskell, kinds: uniform bounded normal exponential}
+          - {name: tandem-ml (C fills), repo: tandem-ml, toolchain: ocaml, kinds: uniform bounded normal exponential-f64}
+          - {name: tandem-ml (Pure), repo: tandem-ml, variant: pure, toolchain: ocaml, kinds: uniform bounded normal exponential-f64}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7
+        with:
+          repository: tandem-rng/${{ matrix.repo }}
+          path: port
+          submodules: recursive
+
+      - name: Install the latest clang
+        if: matrix.clang
+        run: |
+          wget -qO /tmp/llvm.sh https://apt.llvm.org/llvm.sh
+          sudo bash /tmp/llvm.sh
+          v=$(ls /usr/bin/clang-[0-9]* | sed 's|.*/clang-||' | sort -n | tail -1)
+          echo "LLVM=$v" >> "$GITHUB_ENV"
+          echo "CC=clang-$v" >> "$GITHUB_ENV"
+          echo "CXX=clang++-$v" >> "$GITHUB_ENV"
+      - name: Install flang and fpm
+        if: matrix.toolchain == 'fortran'
+        run: |
+          sudo apt-get install -y "flang-$LLVM" "libflang-$LLVM-dev"
+          # fpm picks its flags from the compiler name and knows flang-new, not flang-NN.
+          sudo ln -s "$(command -v flang-$LLVM)" /usr/local/bin/flang-new
+          pip install fpm
+          echo "FPM_FC=flang-new" >> "$GITHUB_ENV"
+          echo "FPM_CC=$CC" >> "$GITHUB_ENV"
+      - uses: julia-actions/setup-julia@v3
+        if: matrix.toolchain == 'julia'
+        with:
+          version: "1"
+      - uses: dtolnay/rust-toolchain@stable
+        if: matrix.toolchain == 'rust'
+      - uses: actions/setup-python@v6
+        if: matrix.toolchain == 'python'
+        with:
+          python-version: "3.14"
+      - uses: r-lib/actions/setup-r@v2
+        if: matrix.toolchain == 'r'
+        with:
+          r-version: release
+      - uses: actions/setup-node@v5
+        if: matrix.toolchain == 'node'
+        with:
+          node-version: latest
+      - uses: prefix-dev/setup-pixi@v0.10.2
+        if: matrix.toolchain == 'pixi'
+        with:
+          manifest-path: port/pixi.toml
+          locked: false
+      - uses: actions/setup-java@v5
+        if: matrix.toolchain == 'java'
+        with:
+          distribution: temurin
+          java-version: "27"
+      - uses: haskell-actions/setup@v2
+        if: matrix.toolchain == 'haskell'
+        with:
+          ghc-version: latest
+          cabal-version: latest
+      - uses: ocaml/setup-ocaml@v3
+        if: matrix.toolchain == 'ocaml'
+        with:
+          ocaml-compiler: "5"
+      - name: Toolchain
+        if: matrix.toolchain == 'swift'
+        run: swiftc --version
+
+      - name: Dump the streams
+        run: bash cross-port/dump.sh ${{ matrix.repo }} port out ${{ matrix.variant }}
+      - uses: actions/download-artifact@v8
+        if: always()
+        with:
+          name: reference
+      - name: Compare with tandem-c
+        if: always()
+        run: |
+          {
+            echo "### ${{ matrix.name }} $(git -C port rev-parse --short HEAD)"
+            echo
+            echo "| stream | result | SHA-256 |"
+            echo "| --- | --- | --- |"
+          } > result.md
+          if bash cross-port/compare.sh reference.sha256 out "${{ matrix.kinds }}" >> result.md; then s=0; else s=1; fi
+          cat result.md >> "$GITHUB_STEP_SUMMARY"
+          exit $s
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: result-${{ strategy.job-index }}
+          path: result.md
+
+  summary:
+    name: summary
+    needs: port
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: result-*
+          path: results
+      - run: |
+          {
+            echo "## Ports against tandem-c main"
+            echo
+            for f in $(ls results/*/result.md | sort -V); do cat "$f"; echo; done
+            cat cross-port/skipped.md
+          } >> "$GITHUB_STEP_SUMMARY"
