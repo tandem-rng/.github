@@ -4,7 +4,7 @@ Each port writes the Tandem8x32 bitstream. Floating-point mappings and derived d
 
 This table describes documented interfaces, not a hardware validation matrix. Follow each port's link for its API and tested devices.
 The precision columns cover Float32 and Float64 draws. They do not list every integer, half-precision, or complex type.
-A dash means the port documents no GPU interface. “CPU conversion” means GPU-generated words become floating-point values on the host.
+A dash in the GPU column means the port documents no GPU interface. “CPU conversion” means GPU-generated words become floating-point values on the host.
 
 | Port and API | CPU interface | GPU interface | Float32 | Float64 | Limits |
 |---|---|---|---|---|---|
