@@ -3,26 +3,28 @@
 Tandem8x32 is a noncryptographic pseudorandom number generator built to be fast on CPUs and GPUs alike.
 The [specification](https://github.com/tandem-rng/spec) defines how the bitstream is produced, and every port below writes it bit for bit, so a seed gives the same bitstream in every language and on every device.
 
-| language | repository | status |
-|---|---|---|
-| Julia | [TandemRNG.jl](https://github.com/tandem-rng/TandemRNG.jl) | reference, CPU and GPU arrays |
-| C, C++17 | [tandem-c](https://github.com/tandem-rng/tandem-c) | reference, SIMD and OpenMP offload |
-| Rust | [tandem-rs](https://github.com/tandem-rng/tandem-rs) | `rand_core` traits, `wgpu` fills |
-| Python | [tandem-numpy](https://github.com/tandem-rng/tandem-numpy) | NumPy `BitGenerator` |
-| CUDA | [tandem-cuda](https://github.com/tandem-rng/tandem-cuda) | header-only device core |
-| JAX | [tandem-jax](https://github.com/tandem-rng/tandem-jax) | `jax.random` key, CUDA kernels |
-| R | [tandem-r](https://github.com/tandem-rng/tandem-r) | package `tandemrng`, base R hook |
-| PyTorch | [tandem-torch](https://github.com/tandem-rng/tandem-torch) | CPU and CUDA tensors |
-| WebGPU | [tandem-webgpu](https://github.com/tandem-rng/tandem-webgpu) | WGSL shader, TypeScript CPU path |
-| Fortran | [tandem-fortran](https://github.com/tandem-rng/tandem-fortran) | module, CUDA Fortran fills |
-| Kokkos | [tandem-kokkos](https://github.com/tandem-rng/tandem-kokkos) | every Kokkos backend |
-| Java | [tandem-java](https://github.com/tandem-rng/tandem-java) | `RandomGenerator`, CUDA through FFM |
-| Mojo | [tandem-mojo](https://github.com/tandem-rng/tandem-mojo) | CPU and GPU fills |
-| SYCL | [tandem-sycl](https://github.com/tandem-rng/tandem-sycl) | any SYCL device |
-| Metal | [tandem-metal](https://github.com/tandem-rng/tandem-metal) | Swift package, MSL shader, Swift CPU fills |
-| MLX | [tandem-mlx](https://github.com/tandem-rng/tandem-mlx) | `mx.fast.metal_kernel` over the tandem-metal shader |
-| Haskell | [tandem-hs](https://github.com/tandem-rng/tandem-hs) | pure Haskell, `random` interface |
-| OCaml | [tandem-ml](https://github.com/tandem-rng/tandem-ml) | fills over tandem-c, pure OCaml fallback, Float64 only |
+| language | repository | docs | status |
+|---|---|---|---|
+| Julia | [TandemRNG.jl](https://github.com/tandem-rng/TandemRNG.jl) | [Docs](https://tandem-rng.github.io/TandemRNG.jl/) | reference, CPU and GPU arrays |
+| C, C++17 | [tandem-c](https://github.com/tandem-rng/tandem-c) | [Docs](https://tandem-rng.github.io/tandem-c/) | reference, SIMD and OpenMP offload |
+| Rust | [tandem-rs](https://github.com/tandem-rng/tandem-rs) | [Docs](https://tandem-rng.github.io/tandem-rs/) | `rand_core` traits, `wgpu` fills |
+| Python | [tandem-numpy](https://github.com/tandem-rng/tandem-numpy) | [Docs](https://tandem-rng.github.io/tandem-numpy/) | NumPy `BitGenerator` |
+| CUDA | [tandem-cuda](https://github.com/tandem-rng/tandem-cuda) | [Docs](https://tandem-rng.github.io/tandem-cuda/) | header-only device core |
+| JAX | [tandem-jax](https://github.com/tandem-rng/tandem-jax) | [Docs](https://tandem-rng.github.io/tandem-jax/) | `jax.random` key, CUDA kernels |
+| R | [tandem-r](https://github.com/tandem-rng/tandem-r) | [Docs](https://tandem-rng.github.io/tandem-r/) | package `tandemrng`, base R hook |
+| PyTorch | [tandem-torch](https://github.com/tandem-rng/tandem-torch) | [Docs](https://tandem-rng.github.io/tandem-torch/) | CPU and CUDA tensors |
+| WebGPU | [tandem-webgpu](https://github.com/tandem-rng/tandem-webgpu) | [Docs](https://tandem-rng.github.io/tandem-webgpu/) | WGSL shader, TypeScript CPU path |
+| Fortran | [tandem-fortran](https://github.com/tandem-rng/tandem-fortran) | [Docs](https://tandem-rng.github.io/tandem-fortran/) | module, CUDA Fortran fills |
+| Kokkos | [tandem-kokkos](https://github.com/tandem-rng/tandem-kokkos) | [Docs](https://tandem-rng.github.io/tandem-kokkos/) | every Kokkos backend |
+| Java | [tandem-java](https://github.com/tandem-rng/tandem-java) | [Docs](https://tandem-rng.github.io/tandem-java/) | `RandomGenerator`, CUDA through FFM |
+| Mojo | [tandem-mojo](https://github.com/tandem-rng/tandem-mojo) | [Docs](https://tandem-rng.github.io/tandem-mojo/) | CPU and GPU fills |
+| SYCL | [tandem-sycl](https://github.com/tandem-rng/tandem-sycl) | [Docs](https://tandem-rng.github.io/tandem-sycl/) | any SYCL device |
+| Metal | [tandem-metal](https://github.com/tandem-rng/tandem-metal) | [Docs](https://tandem-rng.github.io/tandem-metal/) | Swift package, MSL shader, Swift CPU fills |
+| MLX | [tandem-mlx](https://github.com/tandem-rng/tandem-mlx) | [Docs](https://tandem-rng.github.io/tandem-mlx/) | `mx.fast.metal_kernel` over the tandem-metal shader |
+| Haskell | [tandem-hs](https://github.com/tandem-rng/tandem-hs) | [Docs](https://tandem-rng.github.io/tandem-hs/) | pure Haskell, `random` interface |
+| OCaml | [tandem-ml](https://github.com/tandem-rng/tandem-ml) | [Docs](https://tandem-rng.github.io/tandem-ml/) | fills over tandem-c, pure OCaml fallback, Float64 only |
+
+[Support overview](https://github.com/tandem-rng/.github/blob/main/profile/SUPPORT.md): CPU and GPU interfaces, floating-point precision, and limits.
 
 | port | hardware | Float64 uniform fill, GiB/s | Float64 normal fill, GiB/s | source |
 |---|---|---|---|---|

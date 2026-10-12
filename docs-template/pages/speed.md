@@ -1,4 +1,4 @@
-# Speed
+# Performance
 
 State the command that produces the figures. Measure on an idle machine and never quote its
 load.

@@ -12,7 +12,7 @@ colours of the [landing page](https://tandem-rng.github.io), light and dark, at 
 | `api.md` | API | Use, Reference, other interfaces, Parallel use |
 | `design.md` | Design | Fills, Bounded integers, Normals, Exponentials |
 | `tests.md` | Tests | The command, Suite, Fixtures, CI |
-| `speed.md` | Speed | CPU, GPU, Other generators |
+| `speed.md` | Performance | CPU, GPU, Other generators |
 
 `pages/` holds each file with its headings and one sentence per section on what belongs there.
 Only `index.md` is required. Keep the `##` headings and their order. Delete a section that does
@@ -33,7 +33,7 @@ fixed pages, labelled with its `#` heading.
 5. Link the site from the README badge line and footer:
    ```markdown
    [![Docs](https://img.shields.io/badge/docs-tandem--rng.github.io-7fb3ee.svg)](https://tandem-rng.github.io/<repo>/)
-   [Documentation](https://tandem-rng.github.io/<repo>/) · [Apache 2.0 license](LICENSE)
+   [Docs](https://tandem-rng.github.io/<repo>/) · [Specification](https://github.com/tandem-rng/spec/blob/main/SPEC.md) · [Website](https://tandem-rng.github.io/) · [Issues](https://github.com/tandem-rng/<repo>/issues) · [License](LICENSE)
    ```
 
 ## Links

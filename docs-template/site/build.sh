@@ -30,7 +30,7 @@ label() {
     api) echo API ;;
     design) echo Design ;;
     tests) echo Tests ;;
-    speed) echo Speed ;;
+    speed) echo Performance ;;
     *) sed -n 's/^# //p' "$src/$1.md" | head -n 1 | escape ;;
   esac
 }

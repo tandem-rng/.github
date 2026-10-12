@@ -7,7 +7,7 @@ bit.
 - [API](api.md): the public interface, its extra interfaces and parallel use.
 - [Design](design.md): how the fills and the derived draws work in this port.
 - [Tests](tests.md): what the suite checks, where the fixtures come from, and what CI runs.
-- [Speed](speed.md): the measured figures, with hardware and method.
+- [Performance](speed.md): the measured figures, with hardware and method.
 
 ## Install
 
